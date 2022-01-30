@@ -46,9 +46,10 @@ public class ListingControllerIntegrationTest {
     @Test
     public void whenListingFoundByDealer_shouldReturnListingResponse() throws Exception {
         var dealerId = 1L;
-        when(listingService.getListings(dealerId))
-                .thenReturn(List.of(ListingDto.builder().make("BMW").build(),
-                        ListingDto.builder().make("AMG").build()));
+        doReturn(List.of(ListingDto.builder().make("BMW").build(),
+                ListingDto.builder().make("AMG").build()))
+                .when(listingService)
+                .getListings(dealerId);
 
         this.mockMvc.perform(get("/listing/{dealerId}", dealerId))
                 .andExpect(status().isOk())
