@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 public class ListingServiceTest {
 
     @Autowired
