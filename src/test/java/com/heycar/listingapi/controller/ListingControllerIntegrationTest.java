@@ -45,7 +45,7 @@ public class ListingControllerIntegrationTest {
 
     @Test
     public void whenListingFoundByDealer_shouldReturnListingResponse() throws Exception {
-        Long dealerId = 1L;
+        var dealerId = 1L;
         when(listingService.getListings(dealerId))
                 .thenReturn(List.of(ListingDto.builder().make("BMW").build(),
                         ListingDto.builder().make("AMG").build()));
@@ -58,7 +58,7 @@ public class ListingControllerIntegrationTest {
 
     @Test
     public void whenListingNotFoundByDealer_shouldReturnEmptyArrayResponse() throws Exception {
-        Long dealerId = 2L;
+        var dealerId = 2L;
         when(listingService.getListings(dealerId)).thenReturn(Collections.emptyList());
 
         this.mockMvc.perform(get("/listing/{dealerId}", dealerId))
@@ -68,7 +68,7 @@ public class ListingControllerIntegrationTest {
 
     @Test
     public void whenValidJSONNewListings_shouldReturnHttpOKWithEmptyBody() throws Exception {
-        Long dealerId = 3L;
+        var dealerId = 3L;
 
         doNothing().when(listingService).upsertListing(eq(dealerId), anyList());
 
@@ -100,7 +100,7 @@ public class ListingControllerIntegrationTest {
 
     @Test
     public void whenInvalidJSONNewListings_shouldReturnHttpBadRequestWithViolationsResponse() throws Exception {
-        Long dealerId = 4L;
+        var dealerId = 4L;
 
         this.mockMvc.perform(post("/listing/{dealerId}", dealerId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -130,11 +130,11 @@ public class ListingControllerIntegrationTest {
 
     @Test
     public void whenValidCSVNewListings_shouldReturnHttpOKWithEmptyBody() throws Exception {
-        Long dealerId = 5L;
+        var dealerId = 5L;
 
-        String validCSVPath = "src/test/resources/valid_listings.csv";
+        var validCSVPath = "src/test/resources/valid_listings.csv";
 
-        MockMultipartFile valid = new MockMultipartFile("file", new FileInputStream(validCSVPath));
+        var valid = new MockMultipartFile("file", new FileInputStream(validCSVPath));
 
         this.mockMvc.perform(multipart("/listing/csv/{dealerId}", dealerId)
                         .file(valid))
@@ -144,11 +144,11 @@ public class ListingControllerIntegrationTest {
 
     @Test
     public void whenInvalidCSVNewListings_shouldReturnHttpBadRequestWithViolationResponse() throws Exception {
-        Long dealerId = 6L;
+        var dealerId = 6L;
 
-        String invalidCSVPath = "src/test/resources/invalid_listings.csv";
+        var invalidCSVPath = "src/test/resources/invalid_listings.csv";
 
-        MockMultipartFile invalid = new MockMultipartFile("file", new FileInputStream(invalidCSVPath));
+        var invalid = new MockMultipartFile("file", new FileInputStream(invalidCSVPath));
 
         doCallRealMethod().when(csvProviderHelper).getListingsFromCSV(invalid);
 
@@ -161,7 +161,7 @@ public class ListingControllerIntegrationTest {
     @Test
     public void whenSearchFound_shouldReturnHttpOKWithDealerMappedListingResponse() throws Exception {
 
-        SearchListingRequest request = new SearchListingRequest();
+        var request = new SearchListingRequest();
         request.setMake("BMW");
         request.setModel("M3");
 
@@ -179,7 +179,7 @@ public class ListingControllerIntegrationTest {
     }
 
     private Listing mockListing(Long dealerId) {
-        Listing listing = new Listing();
+        var listing = new Listing();
         listing.setMake("mockMake");
         listing.setModel("mockmodel");
         listing.setId(new Listing.ListingId(dealerId, "mockCode"));
