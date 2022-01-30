@@ -39,6 +39,6 @@ You can access the documentation after running the API on http://localhost:8080/
 
 - [ ] Use redis(or alternative) for distributed cache.
 - [ ] Internationalization for error messages maybe.
-- [ ] Use pegination for listing and search. (data might get too big)
+- [ ] Use pagination for listing and search. (data might get too big)
 - [ ] Test coverage to %100 :)
 - [ ] Use mapstruct(or alternative) for mapping from/to dto and entity. (for readability)
