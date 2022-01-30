@@ -7,12 +7,14 @@ import com.heycar.listingapi.service.ListingService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Slf4j
@@ -26,16 +28,16 @@ public class ListingController {
 
     @Operation(summary = "Upload new listings for a dealer in JSON array format")
     @PostMapping("/{dealerId}")
-    public ResponseEntity upsertListing(@PathVariable Long dealerId, @Valid @RequestBody List<ListingDto> listings) {
+    public ResponseEntity upsertListing(@PathVariable Long dealerId, @Valid @NotNull @RequestBody List<ListingDto> listings) {
         listingService.upsertListing(dealerId, listings);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Operation(summary = "Upload new listings for a dealer in CSV format")
     @PostMapping(value = "/csv/{dealerId}")
     public ResponseEntity upsertListingCSV(@PathVariable Long dealerId, @RequestParam("file") MultipartFile file) {
         listingService.upsertListingCSV(dealerId, file);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Operation(summary = "Get listings by dealer")
