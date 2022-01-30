@@ -35,6 +35,36 @@ That's all, you now have listing-api running locally on port 8080! 🎉
 
 You can access the documentation after running the API on http://localhost:8080/swagger-ui.html
 
+> Example JSON listing request
+
+```json
+[
+    {
+        "code": "1",
+        "make": "BMW",
+        "model": "M3",
+        "year": 2022,
+        "color": "Red",
+        "price": 10000,
+        "kw": 200
+    },
+    {
+        "code": "2",
+        "make": "VW",
+        "model": "GOLF",
+        "year": 2021,
+        "color": "Black",
+        "price": 9000,
+        "kw": 160
+    }
+]
+```
+
+> Example CSV listing request
+
+[valid csv file](https://github.com/layemut/listing-api/blob/869aabe14b9783100f3df7ec82971cf7d9eb7430/src/test/resources/valid_listings.csv)
+
+
 ## 🚏 Roadmap
 
 - [ ] Use redis(or alternative) for distributed cache.
