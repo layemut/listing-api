@@ -5,6 +5,7 @@ import com.heycar.listingapi.model.request.SearchListingRequest;
 import com.heycar.listingapi.model.response.ListingResponse;
 import com.heycar.listingapi.service.ListingService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,13 +29,15 @@ public class ListingController {
 
     @Operation(summary = "Upload new listings for a dealer in JSON array format")
     @PostMapping("/{dealerId}")
+    @ApiResponse(responseCode = "201", description = "Successful upload")
     public ResponseEntity upsertListing(@PathVariable Long dealerId, @Valid @NotNull @RequestBody List<ListingDto> listings) {
         listingService.upsertListing(dealerId, listings);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Operation(summary = "Upload new listings for a dealer in CSV format")
-    @PostMapping(value = "/csv/{dealerId}")
+    @PostMapping(value = "/csv/{dealerId}", consumes = {"multipart/form-data"})
+    @ApiResponse(responseCode = "201", description = "Successful upload")
     public ResponseEntity upsertListingCSV(@PathVariable Long dealerId, @RequestParam("file") MultipartFile file) {
         listingService.upsertListingCSV(dealerId, file);
         return ResponseEntity.status(HttpStatus.CREATED).build();
