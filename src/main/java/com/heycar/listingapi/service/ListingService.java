@@ -40,7 +40,7 @@ public class ListingService {
     @Caching(
             evict = {
                     @CacheEvict(cacheNames = "listings", key = "#dealerId"),
-                    @CacheEvict(cacheNames = "search_listing", key = "#dealerId"),
+                    @CacheEvict(cacheNames = "search_listing", allEntries = true),
             }
     )
     public void upsertListingCSV(Long dealerId, MultipartFile file) {
@@ -48,7 +48,7 @@ public class ListingService {
         upsertListing(dealerId, listings);
     }
 
-    @Cacheable(cacheNames = "listings")
+    @Cacheable(cacheNames = "listings", key = "#dealerId")
     public List<ListingDto> getListings(Long dealerId) {
         return listingRepository.findAllById_DealerId(dealerId)
                 .stream()
